@@ -4,9 +4,10 @@ import { Button, Icon, Segment, Container, Header } from 'semantic-ui-react'
 import PropTypes from "prop-types"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
+import { logoutUser } from "../../methods/auth"
 
 import Avatar from "./Avatar"
-import Stats from "./Stats"
+import Controls from "./Controls"
 import Notes from "./Notes"
 
 class Dashboard extends Component {
@@ -26,7 +27,7 @@ class Dashboard extends Component {
           </Header>
           Hi {user.displayName} how are you feeling today?
           <Segment.Inline>
-            <Stats />
+            <Controls logout={this.props.logoutUser} />
           </Segment.Inline>
         </Segment>
         <Notes />
@@ -36,6 +37,7 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 }
 
@@ -43,5 +45,5 @@ const mapStateToProps = state => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps, { })(withRouter(Dashboard))
+export default connect(mapStateToProps, { logoutUser })(withRouter(Dashboard))
 

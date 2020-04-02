@@ -23,6 +23,17 @@ export const isLoggedIn = () => dispatch => {
   })
 }
 
+export const logoutUser = () => dispatch => {
+  API.auth().signOut().then(() => {
+    dispatch(setCurrentUser({}))
+  }).catch(error => {
+    dispatch({
+      type: GET_ERRORS,
+      payload: error
+    })
+  });
+}
+
 export const setCurrentUser = (result) => {
   return {
     type: SET_CURRENT_USER,
@@ -30,6 +41,3 @@ export const setCurrentUser = (result) => {
   }
 }
 
-export const logoutUser = () => dispatch => {
-  dispatch(setCurrentUser({}))
-}
