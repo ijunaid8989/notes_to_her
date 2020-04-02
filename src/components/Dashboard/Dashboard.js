@@ -6,6 +6,8 @@ import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 import Avatar from "./Avatar"
+import Stats from "./Stats"
+import Notes from "./Notes"
 
 class Dashboard extends Component {
 
@@ -24,10 +26,10 @@ class Dashboard extends Component {
           </Header>
           Hi {user.displayName} how are you feeling today?
           <Segment.Inline>
-            <Button primary>Clear Query</Button>
-            <Button>Add Document</Button>
+            <Stats />
           </Segment.Inline>
         </Segment>
+        <Notes />
       </Container>
     );
   }
