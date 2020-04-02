@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import './App.css';
 
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom"
+import { isLoggedIn } from "./methods/auth"
 import { Provider } from "react-redux"
 import store from "./store"
 
-import Login from "./components/Login"
+import Login from "./components/Login/Login"
 import PrivateRoute from "./components/PrivateRoute"
-import Dashboard from "./components/Dashboard"
+import Dashboard from "./components/Dashboard/Dashboard"
 
-import { Container } from 'semantic-ui-react'
+store.dispatch(isLoggedIn())
 
 class App extends Component {
   render() {

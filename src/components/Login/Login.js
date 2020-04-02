@@ -4,7 +4,7 @@ import { Button, Icon, Container } from 'semantic-ui-react'
 import PropTypes from "prop-types"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
-import { loginUser } from "../methods/auth"
+import { loginUser } from "../../methods/auth"
 
 
 class Login extends Component {
