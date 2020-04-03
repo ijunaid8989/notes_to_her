@@ -27,7 +27,7 @@ class Dashboard extends Component {
           </Header>
           Hi {user.displayName} how are you feeling today?
           <Segment.Inline>
-            <Controls />
+            <Controls logout={this.props.logoutUser} />
           </Segment.Inline>
         </Segment>
         <Notes />
