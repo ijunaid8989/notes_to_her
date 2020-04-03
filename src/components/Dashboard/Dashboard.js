@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Icon, Segment, Container, Header } from 'semantic-ui-react'
+import { Segment, Container, Header } from 'semantic-ui-react'
 
 import PropTypes from "prop-types"
 import { withRouter } from "react-router-dom"
@@ -27,7 +27,7 @@ class Dashboard extends Component {
           </Header>
           Hi {user.displayName} how are you feeling today?
           <Segment.Inline>
-            <Controls logout={this.props.logoutUser} />
+            <Controls />
           </Segment.Inline>
         </Segment>
         <Notes />
