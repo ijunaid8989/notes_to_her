@@ -8,12 +8,14 @@ import {
   Form,
   Input,
   Divider,
-  Message
+  Message,
+  Popup
 } from 'semantic-ui-react'
 
+import isEmpty from "../../validation/is-empty"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
-// import { addNote } from "../../methods/notes"
+import { addNote } from "../../methods/notes"
 
 class AddNote extends Component {
   constructor() {
@@ -25,33 +27,18 @@ class AddNote extends Component {
       formError: false,
       emojiError: "You cannot add more than one emoji.",
       noteError: "Your note cannot be long enough but 200 characters.",
-      errorDisplay: ""
+      errorDisplay: "",
+      errros: {}
     }
     this.addANote = this.addANote.bind(this)
     this.onChange = this.onChange.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+    this.clearAllStates = this.clearAllStates.bind(this)
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.errors !== this.props.errors) {
-      this.setState({ errors: newProps.errors })
-    }
-
-
-    // remove loading and clsoe modal
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    console.log(state.emoji.length)
-    if (state.emoji.length > 2) {
-      return {...state, formError: true, errorDisplay: state.emojiError}
-    } else if (state.emoji.length <= 2) {
-      return {...state, formError: false, errorDisplay: ""}
-    }
-
-    if (state.note.length > 100) {
-      return {...state, formError: true, errorDisplay: state.noteError}
-    } else if (state.note.length <= 100) {
-      return {...state, formError: false, errorDisplay: ""}
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({errors: nextProps.errors, loading: false})
     }
   }
 
@@ -61,22 +48,31 @@ class AddNote extends Component {
 
   addANote() {
     this.setState({ loading: true })
+    this.props.addNote({emoji: this.state.emoji, note: this.state.note, userId: this.props.auth.user.uid})
+  }
+
+  closeModal() {
+    this.props.hideAddNote()
+    this.clearAllStates()
   }
 
   clearAllStates () {
-    this.setState({
+    this.setState(prevState => ({
+      ...prevState,
       loading: false,
       emoji: "",
-      node: ""
-    }) 
+      note: "",
+      errors: {}
+    }))
   }
 
   render() {
     return (
       <div>
-        <Modal size="mini" open={this.props.showAddNote} onClose={this.props.hideAddNote}>
+        <Modal size="mini" open={this.props.showAddNote} onClose={this.closeModal}>
           <Modal.Header>How do you feel?</Modal.Header>
           <Modal.Content>
+            {this.state.errors && this.state.errors.message}
             <Dimmer active={this.state.loading} inverted>
               <Loader inverted size="mini">Loading</Loader>
             </Dimmer>
@@ -132,4 +128,4 @@ const mapStateToProps = (state) => ({
   errors: state.errors
 })
 
-export default connect(mapStateToProps, {  })(AddNote)
+export default connect(mapStateToProps, { addNote })(AddNote)

@@ -5,6 +5,7 @@ import PropTypes from "prop-types"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 import { logoutUser } from "../../methods/auth"
+import { getNotes } from "../../methods/notes"
 
 import Avatar from "./Avatar"
 import Controls from "./Controls"
@@ -14,11 +15,20 @@ class Dashboard extends Component {
 
   constructor() {
     super();
+    this.state = {
+      notes: []
+    }
+  }
+
+  componentDidMount() {
+    const { uid } = this.props.auth.user
+    this.props.getNotes(uid)
   }
 
   render() {
     const { user } = this.props.auth
-    console.log(user)
+    const { notes } = this.props
+    console.log(this.notes)
     return (
       <Container textAlign='center'>
         <Segment placeholder>
@@ -38,12 +48,14 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  getNotes: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  notes: state.notes.notes,
 })
 
-export default connect(mapStateToProps, { logoutUser })(withRouter(Dashboard))
+export default connect(mapStateToProps, { logoutUser, getNotes })(withRouter(Dashboard))
 
