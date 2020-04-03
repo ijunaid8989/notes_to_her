@@ -22,7 +22,10 @@ class AddNote extends Component {
       loading: false,
       emoji: "",
       note: "",
-      boxLimit: false
+      formError: false,
+      emojiError: "You cannot add more than one emoji.",
+      noteError: "Your note cannot be long enough but 200 characters.",
+      errorDisplay: ""
     }
     this.addANote = this.addANote.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -37,12 +40,18 @@ class AddNote extends Component {
     // remove loading and clsoe modal
   }
 
-  componentDidUpdate(prevProp, prevState) {
-    console.log(prevState.note.length)
-    if (prevState.note.length >= 100) {
-      this.state.boxLimit = true
-    } else {
-      this.state.boxLimit = false
+  static getDerivedStateFromProps(props, state) {
+    console.log(state.emoji.length)
+    if (state.emoji.length > 2) {
+      return {...state, formError: true, errorDisplay: state.emojiError}
+    } else if (state.emoji.length <= 2) {
+      return {...state, formError: false, errorDisplay: ""}
+    }
+
+    if (state.note.length > 100) {
+      return {...state, formError: true, errorDisplay: state.noteError}
+    } else if (state.note.length <= 100) {
+      return {...state, formError: false, errorDisplay: ""}
     }
   }
 
@@ -71,9 +80,12 @@ class AddNote extends Component {
             <Dimmer active={this.state.loading} inverted>
               <Loader inverted size="mini">Loading</Loader>
             </Dimmer>
-            <Form error={this.state.boxLimit}>
+            <Form error={this.state.formError}>
               <Form.Field>
                 <Input
+                  name="emoji"
+                  onChange={this.onChange}
+                  value={this.state.emoji}
                   label={{ icon: 'heart', color: "red" }}
                   labelPosition='left corner'
                   placeholder='place your emoji'
@@ -81,23 +93,22 @@ class AddNote extends Component {
               </Form.Field>
               <Form.Field>
                 <TextArea
-                  label={{ icon: 'sticky note', color: "red" }}
                   placeholder='Tell us more'
                   name="note"
                   onChange={this.onChange}
                   value={this.state.note}
                 />
               </Form.Field>
-              <Message
-                error
-                content='Your note cannot be long enough but 200 characters.'
-              />
+              <Message error>
+                <p>{this.state.errorDisplay}</p>
+              </Message>
             </Form>
           </Modal.Content>
           <Modal.Actions>
             <Button negative onClick={this.props.hideAddNote}>No</Button>
             <Button
               onClick={this.addANote}
+              disabled={this.state.formError}
               positive
               icon='checkmark'
               labelPosition='right'
