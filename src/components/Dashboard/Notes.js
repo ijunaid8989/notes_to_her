@@ -11,7 +11,7 @@ const Notes = () => (
           This is a dummy note from me
         </Card.Description>
       </Card.Content>
-      <Card.Content extra>
+      <Card.Content extra textAlign='right'>
         <a>
           <Icon name='calendar times' />
           Monday 22 2017
