@@ -15,7 +15,7 @@ class Notes extends Component {
               {note.note}
             </Card.Description>
           </Card.Content>
-          <Card.Content extra>
+          <Card.Content extra color="red">
             <a className="wordCount">
               <Icon name='heartbeat' />
               {note.count}
