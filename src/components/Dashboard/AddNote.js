@@ -35,7 +35,6 @@ class AddNote extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors !== this.props.errors) {
-      console.log(nextProps.errors)
       this.setState({errors: nextProps.errors, loading: false})
     }
 
