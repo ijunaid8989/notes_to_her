@@ -7,12 +7,9 @@ import {
   TextArea,
   Form,
   Input,
-  Divider,
   Message,
-  Popup
 } from 'semantic-ui-react'
 
-import isEmpty from "../../validation/is-empty"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { addNote } from "../../methods/notes"
@@ -37,8 +34,14 @@ class AddNote extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
+    if (nextProps.errors !== this.props.errors) {
+      console.log(nextProps.errors)
       this.setState({errors: nextProps.errors, loading: false})
+    }
+
+    const { closeModal } = nextProps.notes
+    if (closeModal) {
+      this.closeModal()
     }
   }
 
@@ -125,7 +128,8 @@ AddNote.propTypes = {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  notes: state.notes
 })
 
 export default connect(mapStateToProps, { addNote })(AddNote)

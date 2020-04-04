@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
-import { Segment, Container, Header } from 'semantic-ui-react'
+import {
+  Segment,
+  Container,
+  Header,
+  Loader
+} from 'semantic-ui-react'
 
 import PropTypes from "prop-types"
 import { withRouter } from "react-router-dom"
@@ -27,8 +32,7 @@ class Dashboard extends Component {
 
   render() {
     const { user } = this.props.auth
-    const { notes } = this.props
-    console.log(this.notes)
+    const { notes, loading } = this.props.notes
     return (
       <Container textAlign='center'>
         <Segment placeholder>
@@ -40,7 +44,7 @@ class Dashboard extends Component {
             <Controls logout={this.props.logoutUser} />
           </Segment.Inline>
         </Segment>
-        <Notes />
+        {loading ? <Loader active inline='centered' /> : <Notes notes={notes} />}
       </Container>
     );
   }
@@ -54,7 +58,7 @@ Dashboard.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  notes: state.notes.notes,
+  notes: state.notes,
 })
 
 export default connect(mapStateToProps, { logoutUser, getNotes })(withRouter(Dashboard))

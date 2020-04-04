@@ -1,9 +1,9 @@
 import { ADD_NOTE, NOTE_LOADING, GET_NOTES } from "../types"
-import isEmpty from "../validation/is-empty"
 
 const initialState = {
   notes: [],
-  loading: false
+  loading: false,
+  closeModal: false
 }
 
 export default function(state = initialState, action) {
@@ -24,7 +24,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         notes: [action.payload, ...state.notes],
-        loading: false
+        loading: false,
+        closeModal: true
       };
     default:
       return state;

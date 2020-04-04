@@ -12,13 +12,17 @@ import {
 } from '../types';
 
 export const getNotes = (userId) => dispatch => {
-  console.log(userId)
   dispatch(setNoteLoading());
   API
     .database()
     .ref('notes/' + userId)
-    .once('value').then((snapshot) => {
-      console.log(snapshot.val())
+    .once('value').then((nts) => {
+      let notes = []
+      nts.forEach(note => { notes.push(note.val()) })
+      dispatch({
+        type: GET_NOTES,
+        payload: notes
+      })
     })
 };
 

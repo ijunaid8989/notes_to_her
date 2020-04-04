@@ -1,24 +1,34 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Card, Label, Icon } from 'semantic-ui-react'
 
-const Notes = () => (
-  <Card.Group centered>
-    <Card>
-      <Card.Content>
-        <Label corner="left" color="red" icon='heart' />
-        <Card.Header><span role="img">😘</span></Card.Header>
-        <Card.Description>
-          This is a dummy note from me
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra textAlign='right'>
-        <a>
-          <Icon name='calendar times' />
-          Monday 22 2017
-        </a>
-      </Card.Content>
-    </Card>
-  </Card.Group>
-)
+class Notes extends Component {
+  render() {
+    const cards = this.props.notes.map((note, idx) => {
+      return (
+        <Card key={idx}>
+          <Card.Content>
+            <Label corner="left" color="red" icon='heart' />
+            <Card.Header><span role="img">{note.emoji}</span></Card.Header>
+            <Card.Description>
+              {note.note} {note.count}
+            </Card.Description>
+          </Card.Content>
+          <Card.Content extra textAlign='right'>
+            <a>
+              <Icon name='calendar times' />
+              {note.date}
+            </a>
+          </Card.Content>
+        </Card>
+      )
+    })
+
+    return (
+      <Card.Group centered>
+        {cards}
+      </Card.Group>
+    )
+  }
+}
 
 export default Notes
