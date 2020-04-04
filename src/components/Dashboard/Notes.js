@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Label, Icon } from 'semantic-ui-react'
 
+import moment from "moment"
+
 class Notes extends Component {
   render() {
     const cards = this.props.notes.map((note, idx) => {
@@ -10,13 +12,17 @@ class Notes extends Component {
             <Label corner="left" color="red" icon='heart' />
             <Card.Header><span role="img">{note.emoji}</span></Card.Header>
             <Card.Description>
-              {note.note} {note.count}
+              {note.note}
             </Card.Description>
           </Card.Content>
-          <Card.Content extra textAlign='right'>
-            <a>
+          <Card.Content extra>
+            <a className="wordCount">
+              <Icon name='heartbeat' />
+              {note.count}
+            </a>
+            <a className="momentAgo">
               <Icon name='calendar times' />
-              {note.date}
+              {moment(note.date).fromNow()}
             </a>
           </Card.Content>
         </Card>
