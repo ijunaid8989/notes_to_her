@@ -77,7 +77,7 @@ class AddNote extends Component {
   render() {
     return (
       <React.Fragment>
-        <Button color="green" content='Add Note' icon='sticky note' labelPosition='left' onClick={this.openNote}/>
+        <Button color="green" content='Note' icon='sticky note' labelPosition='left' onClick={this.openNote}/>
         <Modal size="mini" open={this.state.open} onClose={this.closeModal} closeOnDimmerClick={false}>
           <Modal.Header>How do you feel?</Modal.Header>
           <Modal.Content>
