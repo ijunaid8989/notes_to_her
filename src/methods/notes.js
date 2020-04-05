@@ -27,7 +27,6 @@ export const getNotes = (userId) => dispatch => {
 };
 
 export const addNote = (data) => dispatch => {
-  dispatch(setNoteLoading())
   if (isEmpty(data.note) || isEmpty(data.emoji)) {
     dispatch(getErrros({message: "Add something!"}))
   } else {
