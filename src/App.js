@@ -9,6 +9,7 @@ import store from "./store"
 import Login from "./components/Login/Login"
 import PrivateRoute from "./components/PrivateRoute"
 import Dashboard from "./components/Dashboard/Dashboard"
+import Stats from "./components/Dashboard/Stats"
 
 store.dispatch(isLoggedIn())
 
@@ -21,6 +22,13 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Switch>
               <PrivateRoute exact path="/" component={Dashboard} />
+            </Switch>
+            <Switch>
+              <PrivateRoute
+                exact
+                path="/stats"
+                component={Stats}
+              />
             </Switch>
           </React.Fragment>
         </Router>

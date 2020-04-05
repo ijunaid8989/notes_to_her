@@ -20,6 +20,7 @@ class AddNote extends Component {
     this.state = {
       loading: false,
       emoji: "",
+      open: false,
       note: "",
       formError: false,
       emojiError: "You cannot add more than one emoji.",
@@ -31,6 +32,7 @@ class AddNote extends Component {
     this.onChange = this.onChange.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.clearAllStates = this.clearAllStates.bind(this)
+    this.openNote = this.openNote.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -54,13 +56,17 @@ class AddNote extends Component {
   }
 
   closeModal() {
-    this.props.hideAddNote()
     this.clearAllStates()
+  }
+
+  openNote() {
+    this.setState({ open: true })
   }
 
   clearAllStates () {
     this.setState(prevState => ({
       ...prevState,
+      open: false,
       loading: false,
       emoji: "",
       note: "",
@@ -70,8 +76,9 @@ class AddNote extends Component {
 
   render() {
     return (
-      <div>
-        <Modal size="mini" open={this.props.showAddNote} onClose={this.closeModal}>
+      <React.Fragment>
+        <Button color="green" content='Add Note' icon='sticky note' labelPosition='left' onClick={this.openNote}/>
+        <Modal size="mini" open={this.state.open} onClose={this.closeModal} closeOnDimmerClick={false}>
           <Modal.Header>How do you feel?</Modal.Header>
           <Modal.Content>
             {this.state.errors && this.state.errors.message}
@@ -103,7 +110,7 @@ class AddNote extends Component {
             </Form>
           </Modal.Content>
           <Modal.Actions>
-            <Button negative onClick={this.props.hideAddNote}>No</Button>
+            <Button negative onClick={this.closeModal}>No</Button>
             <Button
               onClick={this.addANote}
               disabled={this.state.formError}
@@ -114,7 +121,7 @@ class AddNote extends Component {
             />
           </Modal.Actions>
         </Modal>
-      </div>
+      </React.Fragment>
     )
   }
 }

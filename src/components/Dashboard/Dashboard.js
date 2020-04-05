@@ -41,7 +41,7 @@ class Dashboard extends Component {
           </Header>
           Hi {user.displayName} how are you feeling today?
           <Segment.Inline>
-            <Controls logout={this.props.logoutUser} />
+            <Controls history={this.props.history} logout={this.props.logoutUser} />
           </Segment.Inline>
         </Segment>
         {loading ? <Loader active inline='centered' /> : <Notes notes={notes} />}
