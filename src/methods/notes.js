@@ -21,7 +21,7 @@ export const getNotes = (userId) => dispatch => {
       nts.forEach(note => { notes.push(note.val()) })
       dispatch({
         type: GET_NOTES,
-        payload: notes
+        payload: notes.sort((a, b) => b.date - a.date)
       })
     })
 };
