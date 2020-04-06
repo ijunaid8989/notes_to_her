@@ -4,15 +4,23 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import Navigation from "./Navigation"
+
+import {
+  Container,
+  Loader
+} from 'semantic-ui-react'
+
 class Stats extends Component {
   constructor() {
     super()
   }
 
   render() {
-    console.log(this.props)
     return (
-      <div>STATS</div>
+      <Container textAlign='center'>
+        <Navigation />
+      </Container>
     );
   }
 }
