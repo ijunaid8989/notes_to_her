@@ -7,12 +7,16 @@ class Controls extends Component {
     super()
   }
 
+  switchStats(history) {
+    history.push("/stats")
+  }
+
   render() {
     return (
       <React.Fragment>
         <AddNote />
         <Button color="red" content='Logout' icon='log out' labelPosition='right' onClick={this.props.logout} />
-        <Button color="blue" content='Stats' icon='heartbeat' labelPosition='right' />
+        <Button color="blue" content='Stats' icon='heartbeat' labelPosition='right' onClick={(e) => {this.switchStats(this.props.history)}} />
       </React.Fragment>
     )
   }
