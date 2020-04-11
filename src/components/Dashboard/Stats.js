@@ -8,18 +8,38 @@ import Navigation from "./Navigation"
 
 import {
   Container,
-  Loader
+  Loader,
+  Button,
+  Menu
 } from 'semantic-ui-react'
 
 class Stats extends Component {
   constructor() {
     super()
+    this.state = {
+      loading: true
+    }
+    this.getBackToNotes = this.getBackToNotes.bind(this)
+  }
+
+  componentDidMount() {
+    console.log(this.props)
+    console.log("hhhh")
+  }
+
+  getBackToNotes() {
+    this.props.history.push("/")
   }
 
   render() {
     return (
       <Container textAlign='center'>
-        <Navigation />
+        <button className="ui icon left labeled button" onClick={this.getBackToNotes}>
+          <i aria-hidden="true" className="left arrow icon"></i>
+          Back
+        </button>
+        <Container textAlign='justified'>
+        </Container>
       </Container>
     );
   }
@@ -27,12 +47,13 @@ class Stats extends Component {
 
 Stats.propTypes = {
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  notes: state.notes
 });
 
 export default connect(mapStateToProps, { })(
