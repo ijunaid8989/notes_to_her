@@ -41,7 +41,7 @@ class Stats extends Component {
       ]
     }
     this.props.notes.notes.forEach((note) => {
-      data.labels.push(moment.unix(note.date).format("MM/DD/YYYY"))
+      data.labels.push(moment.unix(note.date).format("DD/MM"))
       data.datasets[0].data.push(note.count)
     })
     this.setState({ data })
